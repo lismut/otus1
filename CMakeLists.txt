@@ -5,9 +5,10 @@ if($ENV{TRAVIS_BUILD_NUMBER})
 else()
     project(helloworld VERSION 0.0.4)
 endif()
+include(gtest.cmake)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-find_package(GTest REQUIRED)
+find_package (Threads REQUIRED)
 
 configure_file(version.h.in version.h)
 
@@ -28,9 +29,7 @@ set_target_properties(test_version PROPERTIES
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 
-set_target_properties(test_version_g PROPERTIES
-    INCLUDE_DIRECTORIES ${GTEST_INCLUDE_DIRS}
-)
+# set_target_properties(test_version_g PROPERTIES INCLUDE_DIRECTORIES ${GOOGLETEST_SOURCES} )
 
 target_link_libraries(helloworld.deb PRIVATE
     helloworld
@@ -41,7 +40,8 @@ target_link_libraries(test_version
 )
 
 target_link_libraries(test_version_g
-    ${GTEST_LIBRARIES}
+    gtest 
+    ${CMAKE_THREAD_LIBS_INIT}
     helloworld
 )
 

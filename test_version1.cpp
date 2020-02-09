@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "lib.h"
 
-TEST(, test2)
+TEST(GOOGLE_TEST1, test2)
 {
 	ASSERT_TRUE(version() > 1);
 }
