@@ -40,13 +40,13 @@ target_link_libraries(helloworld.deb PRIVATE
 )
 target_link_libraries(test_version
     ${Boost_LIBRARIES}
-    helloworld gtest_main
+    helloworld
 )
 
 target_link_libraries(test_version_g
     gtest 
     ${CMAKE_THREAD_LIBS_INIT}
-    helloworld
+    helloworld gtest_main
 )
 
 if (MSVC)
