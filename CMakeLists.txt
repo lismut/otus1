@@ -5,13 +5,17 @@ if($ENV{TRAVIS_BUILD_NUMBER})
 else()
     project(helloworld VERSION 0.0.4)
 endif()
-include(gtest.cmake)
+
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 find_package (Threads REQUIRED)
 
 configure_file(version.h.in version.h)
 
+add_subdirectory(
+       "${CMAKE_CURRENT_SOURCE_DIR}/gtest"
+       gtest
+)
 add_executable(helloworld.deb main.cpp)
 add_library(helloworld lib.cpp)
 add_executable(test_version test_version.cpp)
@@ -36,7 +40,7 @@ target_link_libraries(helloworld.deb PRIVATE
 )
 target_link_libraries(test_version
     ${Boost_LIBRARIES}
-    helloworld
+    helloworld gtest_main
 )
 
 target_link_libraries(test_version_g
